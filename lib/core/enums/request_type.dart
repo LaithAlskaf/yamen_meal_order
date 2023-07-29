@@ -1,0 +1,3 @@
+enum RequestType{
+  PUT,GET,POST,DELETE,MULTIPART
+}
