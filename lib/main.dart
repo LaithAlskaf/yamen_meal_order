@@ -19,22 +19,21 @@ Future<void> main() async {
   // globalSharedPreferences=await SharedPreferences.getInstance();
 
   await Get.putAsync<SharedPreferences>(
-        () async {
+    () async {
       var sharedPref = await SharedPreferences.getInstance();
       return sharedPref;
-    },);
+    },
+  );
   Get.put(SharedPreferance());
   Get.put(LocationService());
   Get.put(ConnectivityService());
   Get.put(MyAppController());
   Get.put(CartServices());
-
   try {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
-      
     );
-  }catch (e){
+  } catch (e) {
     e;
   }
 

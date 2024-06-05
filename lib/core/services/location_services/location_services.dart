@@ -5,10 +5,10 @@ import 'package:mealorder/app/app_config.dart';
 import 'package:mealorder/ui/shared/utils.dart';
 
 class LocationService {
-  Location location = new Location();
+  Location location = Location();
 
   Future<LocationData?> getUserCurrentLocation({bool hideLoader = true}) async {
-    LocationData _locationData;
+    LocationData locationData;
 
     if (!await isLocationEnabeld()) return null;
 
@@ -16,11 +16,11 @@ class LocationService {
 
     customLoader();
 
-    _locationData = await location.getLocation();
+    locationData = await location.getLocation();
 
     if (hideLoader) BotToast.closeAllLoading();
 
-    return _locationData;
+    return locationData;
   }
 
   Future<geo.Placemark?> getAddressInfo(LocationData locationData,
@@ -52,7 +52,7 @@ class LocationService {
     if (!_serviceEnabled) {
       _serviceEnabled = await location.requestService();
       if (!_serviceEnabled) {
-        if(AppConfig.isLocationRequired){
+        if (AppConfig.isLocationRequired) {
           //!-- Message to show --
         }
         return false;
@@ -63,7 +63,6 @@ class LocationService {
 
   Future<bool> isPermissionGranted() async {
     PermissionStatus _permissionGranted;
-
     _permissionGranted = await location.hasPermission();
     if (_permissionGranted == PermissionStatus.denied) {
       _permissionGranted = await location.requestPermission();
@@ -72,7 +71,6 @@ class LocationService {
         return false;
       }
     }
-
     return _permissionGranted == PermissionStatus.granted;
   }
 }

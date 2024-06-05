@@ -41,7 +41,7 @@ class SharedPreferance {
   }
 
   List<CartModel> getCartList() {
-    if (globalSharedPreferences!.containsKey(PREF_CART_LIST)) {
+    if (globalSharedPrefs.containsKey(PREF_CART_LIST)) {
       return CartModel.decode(getPrefernce(key: PREF_CART_LIST));
     } else {
       return [];

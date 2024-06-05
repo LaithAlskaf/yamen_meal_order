@@ -1,49 +1,65 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
+import 'package:mealorder/core/enums/request_status.dart';
+import 'package:mealorder/ui/views/map_view/map_controller.dart';
 
 class MapView extends StatefulWidget {
-  const MapView({super.key});
+  final LocationData currentLocation;
+  const MapView({super.key, required this.currentLocation});
 
   @override
   State<MapView> createState() => MapViewState();
 }
 
 class MapViewState extends State<MapView> {
-  final Completer<GoogleMapController> _controller =
-  Completer<GoogleMapController>();
-
-  static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
-  );
-
-  static const CameraPosition _kLake = CameraPosition(
-      bearing: 192.8334901395799,
-      target: LatLng(37.43296265331129, -122.08832357078792),
-      tilt: 59.440717697143555,
-      zoom: 19.151926040649414);
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: GoogleMap(
-        mapType: MapType.hybrid,
-        initialCameraPosition: _kGooglePlex,
-        onMapCreated: (GoogleMapController controller) {
-          _controller.complete(controller);
-        },
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: _goToTheLake,
-        label: const Text('To the lake!'),
-        icon: const Icon(Icons.directions_boat),
-      ),
-    );
+    return GetBuilder(
+        init: MapController(widget.currentLocation),
+        builder: (mapController) {
+          return Scaffold(
+            body: GoogleMap(
+              myLocationButtonEnabled: true,
+              myLocationEnabled: true,
+              mapType: MapType.normal,
+              initialCameraPosition: mapController.currentPosition,
+              onMapCreated: (GoogleMapController controller) async {
+                mapController.controller.complete(controller);
+
+                mapController.countryList.forEach((element) {
+                  mapController.addMarker(
+                      position: LatLng(element.latitude ?? 37.42796133580664,
+                          element.longitude ?? -122.085749655962),
+                      id: element.alpha2.toString());
+                });
+              },
+              markers: mapController.markers,
+              onTap: (latlong) {
+                mapController.selecteLocation = latlong;
+
+                mapController.addMarker(
+                    imageUrl: 'https://www.fluttercampus.com/img/car.png',
+                    position: LatLng(latlong.latitude, latlong.longitude),
+                    id: 'current');
+              },
+            ),
+            floatingActionButton:
+            mapController.requestStatus == RequestStatus.LOADING
+                ? CircularProgressIndicator()
+                : FloatingActionButton.extended(
+              onPressed: _goToTheLake,
+              label: Text(mapController.streetName.value),
+              icon: const Icon(Icons.directions_boat),
+            ),
+          );
+        });
   }
 
   Future<void> _goToTheLake() async {
-    final GoogleMapController controller = await _controller.future;
-    await controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
+    // final GoogleMapController controller = await _controller.future;
+    // await controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
   }
 }

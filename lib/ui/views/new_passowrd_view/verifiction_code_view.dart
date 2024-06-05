@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mealorder/core/enums/message_type.dart';
-import 'package:mealorder/ui/shared/colors.dart';
 import 'package:mealorder/ui/shared/custom_widget/custom_buttom.dart';
 import 'package:mealorder/ui/shared/custom_widget/custom_text.dart';
 import 'package:mealorder/ui/shared/custom_widget/custom_toast.dart';
-import 'package:mealorder/ui/views/new_passowrd_view/new_passoword_view.dart';
 import 'package:mealorder/ui/views/reset_password_view/reset_password_view.dart';
 import 'package:mealorder/ui/views/new_passowrd_view/shared_cntainer_view.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
 
 class SentCodeNewPasswordView extends StatefulWidget {
   const SentCodeNewPasswordView({Key? key}) : super(key: key);
@@ -58,63 +55,65 @@ class _SentCodeNewPasswordViewState extends State<SentCodeNewPasswordView> {
             ),
             const CustomText(text: 'Please check your mobile number'),
             const CustomText(text: 'continue to reset your password'),
-            Padding(
-              padding: const EdgeInsets.only(left:20,right:20,top:20 ),
-              child: PinCodeTextField(
-                appContext: context,
-                cursorColor: AppColors.mainOrangeColor,
-                hintCharacter: '*',
-                hintStyle: const TextStyle(fontSize:25),
-                length: 4,
-                obscuringCharacter:'*' ,
-                obscureText: true,
-                animationType: AnimationType.fade,
-                keyboardType: TextInputType.number,
-                pinTheme: PinTheme(
-                    shape: PinCodeFieldShape.box,
-                    activeColor: AppColors.colorTextFormField,
-                    selectedFillColor: AppColors.colorTextFormField,
-                    selectedColor: AppColors.colorTextFormField,
-                    inactiveFillColor: AppColors.colorTextFormField,
-                    borderRadius: BorderRadius.circular(5),
-                    fieldHeight: 80,
-                    fieldWidth: 80,
-                    activeFillColor: AppColors.colorTextFormField,
-                    inactiveColor: AppColors.colorTextFormField,
-                ),
-                animationDuration: const Duration(milliseconds: 300),
-                // backgroundColor: Colors.white,
-                enableActiveFill: true,
-                onCompleted: (v) {
-                  "Completed";
-                },
-                onChanged: (value) {
-                  List<String> newOtpCodeWidget =
-                      List.generate(value.length, (index) => value[index]);
-                  setState(() {
-                    newOtpCode = newOtpCodeWidget;
-                  });
-                  if (newOtpCode.toString() == otpCode.toString()) {
-                    verifictionCodeOtp = true;
-                    CustomToast.showMessage(
-                        message: 'This code is true thanks for you',
-                        messageType: MessageType.SUCCESS);
-                    Future.delayed(const Duration(seconds: 1)).then((value) {
-                      Get.off(const NewPasswordView());
-                    });
-                  } else if (newOtpCode.length == otpCode.length) {
-                    verifictionCodeOtp = false;
-                    CustomToast.showMessage(
-                        message: 'This code is false please check it',
-                        messageType: MessageType.REJECTED);
-                  }
-                },
-                beforeTextPaste: (text) {
-                  "Allowing to paste $text";
-                  return true;
-                },
-              ),
-            )
+            //TOdo
+            // Padding(
+            //   padding: const EdgeInsets.only(left:20,right:20,top:20 ),
+            //   child: PinCodeTextField(
+            //     appContext: context,
+            //     cursorColor: AppColors.mainOrangeColor,
+            //     hintCharacter: '*',
+            //     hintStyle: const TextStyle(fontSize:25),
+            //     length: 4,
+            //     obscuringCharacter:'*' ,
+            //     obscureText: true,
+            //     animationType: AnimationType.fade,
+            //     keyboardType: TextInputType.number,
+            //     pinTheme: PinTheme(
+            //         shape: PinCodeFieldShape.box,
+            //         activeColor: AppColors.colorTextFormField,
+            //         selectedFillColor: AppColors.colorTextFormField,
+            //         selectedColor: AppColors.colorTextFormField,
+            //         inactiveFillColor: AppColors.colorTextFormField,
+            //         borderRadius: BorderRadius.circular(5),
+            //         fieldHeight: 80,
+            //         fieldWidth: 80,
+            //         activeFillColor: AppColors.colorTextFormField,
+            //         inactiveColor: AppColors.colorTextFormField,
+            //     ),
+            //     animationDuration: const Duration(milliseconds: 300),
+            //     // backgroundColor: Colors.white,
+            //     enableActiveFill: true,
+            //     onCompleted: (v) {
+            //       "Completed";
+            //     },
+            //     onChanged: (value) {
+            //       List<String> newOtpCodeWidget =
+            //           List.generate(value.length, (index) => value[index]);
+            //       setState(() {
+            //         newOtpCode = newOtpCodeWidget;
+            //       });
+            //       if (newOtpCode.toString() == otpCode.toString()) {
+            //         verifictionCodeOtp = true;
+            //         CustomToast.showMessage(
+            //             message: 'This code is true thanks for you',
+            //             messageType: MessageType.SUCCESS);
+            //         Future.delayed(const Duration(seconds: 1)).then((value) {
+            //           Get.off(const NewPasswordView());
+            //         });
+            //       } else if (newOtpCode.length == otpCode.length) {
+            //         verifictionCodeOtp = false;
+            //         CustomToast.showMessage(
+            //             message: 'This code is false please check it',
+            //             messageType: MessageType.REJECTED);
+            //       }
+            //     },
+            //     beforeTextPaste: (text) {
+            //       "Allowing to paste $text";
+            //       return true;
+            //     },
+            //   ),
+            // )
+            //_________________________________________________________________________
             // Padding(
             //   padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 20),
             //   child: Row(
@@ -138,7 +137,6 @@ class _SentCodeNewPasswordViewState extends State<SentCodeNewPasswordView> {
             //     ],
             //   ),
             // ),
-            ,
             CustomButton(
               text: 'Next',
               onPressed: () {

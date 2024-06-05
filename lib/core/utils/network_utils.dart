@@ -8,7 +8,7 @@ class NetworkUtil {
   static String baseUrl = 'training.owner-tech.com';
   static var client = http
       .Client(); // حتى استطيع ارسال واصتقبال الطلبات من ال http يجب ان اهيأ متغير من نوع client
-
+  static bool online = true;
   static Future<dynamic> sendRequest({
     required RequestType type,
     required String url,
@@ -79,7 +79,7 @@ class NetworkUtil {
     Map<String, String>? files = const {},
     Map<String, dynamic>? params,
   }) async {
-    assert(type == RequestType.GET || type == RequestType.MULTIPART);
+    // assert(type == RequestType.GET || type == RequestType.MULTIPART);
     try {
       var request =
           http.MultipartRequest('POST', Uri.https(baseUrl, url, params));
@@ -106,7 +106,7 @@ class NetworkUtil {
       var value = await response.stream.bytesToString();
       responseJson.putIfAbsent('statusCode', () => response.statusCode);
       responseJson.putIfAbsent('response', () => jsonDecode(value));
-
+print(responseJson);
       return responseJson;
     } catch (error) {
       error.toString();

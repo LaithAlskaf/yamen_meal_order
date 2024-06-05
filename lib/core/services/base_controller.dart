@@ -6,6 +6,7 @@ import 'package:mealorder/core/enums/request_status.dart';
 import 'package:mealorder/ui/shared/utils.dart';
 
 class BaseController extends GetxController {
+  Rx<RequestStatus> requestStatus = RequestStatus.DEFUALT.obs;
   var status = RequestStatus.DEFUALT.obs;
   var operationType = {
     "CATEGORY": OperationType.NONE,

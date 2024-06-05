@@ -2,11 +2,9 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:mealorder/core/enums/connectivity_status.dart';
 import 'package:mealorder/core/translation/app_translation.dart';
 import 'package:mealorder/ui/shared/utils.dart';
 import 'package:mealorder/ui/views/splash_screen_view/splash_screen_view.dart';
-import 'package:provider/provider.dart';
 
 import 'package:sizer/sizer.dart';
 
